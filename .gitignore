@@ -2,3 +2,4 @@
 *.csv
 *-checkpoint.ipynb
 *.DS_Store
+*.hdf5
