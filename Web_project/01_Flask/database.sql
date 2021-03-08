@@ -41,6 +41,15 @@ create table content_table(
     references board_table(board_idx)
 );
 
+# 초기 게시판 테이블 데이터
+insert into board_table (board_name) values ('자유게시판');
+insert into board_table (board_name) values ('유머게시판');
+insert into board_table (board_name) values ('정치게시판');
+insert into board_table (board_name) values ('스포츠게시판');
+commit;
+
+
+
 
 # 테이블 삭제
 # drop table user_table, user_board;
