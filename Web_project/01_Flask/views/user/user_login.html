@@ -10,6 +10,32 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	<script>
+		function check_input(){
+			// 사용자가 입력한 값을 가져온다.
+			user_id = $('#user_id').val()
+			user_pw = $('#user_pw').val()
+
+			console.log(user_id)
+			console.log(user_pw)
+
+			// 유효성 검사
+			if(user_id.length < 4){
+				$('#user_id').val('')
+				$('#user_id').focus()
+				return false
+			}
+			
+			if(user_pw.length < 4){
+				$('#user_pw').val('')
+				$('#user_pw').focus()
+				return false
+			}
+
+
+			return true
+		}
+	</script>
 </head>
 
 <body>
@@ -21,11 +47,14 @@
 			<div class="col-sm-6">
 				<div class="card shadow">
 					<div class="card-body">
+						{% if login_fail != None%}
 						<div class="alert alert-danger">
 							<h3>로그인 실패</h3>
 							<p>아이디 비밀번호를 확인해주세요</p>
 						</div>
-						<form action="main" method="get">
+						{% endif %}
+						
+						<form action="user_login_pro" method="post" onsubmit="return check_input()">
 							<div class="form-group">
 								<label for="user_id">아이디</label>
 								<input type="text" id="user_id" name="user_id" class="form-control" />
