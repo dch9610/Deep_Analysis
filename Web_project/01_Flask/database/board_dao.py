@@ -78,5 +78,48 @@ def selectBoardOne(board_idx):
     return result
 # -------------------------------------------
 
+# 게시판 정보를 수정하는 함수
+def updateBoardData(board_name, board_idx):
+    # 쿼리문 작성
+    sql = '''
+        update board_table
+        set board_name = %s
+        where board_idx = %s
+    '''
 
-#    
+    # 데이터베이스 접속
+    conn = connector.get_connection()
+    cursor = conn.cursor()
+
+    # %s에 지정될 값 설정
+    data = (board_name, board_idx)
+
+    # 쿼리문 실행
+    cursor.execute(sql, data)
+    conn.commit()
+
+    # 데이터베이스 접속해제
+    conn.close()
+# -------------------------------------------
+
+# 게시판 정보 삭제 (Delete)
+def deleteBoardData(board_idx):
+    # 쿼리문 작성
+    sql='''
+        delete from board_table
+        where board_idx = %s
+    '''
+
+    # 데이터 베이스 접속
+    conn = connector.get_connection()
+    cursor = conn.cursor()
+
+    # %s에 대입할 값 설정   
+    data = (board_idx)
+
+    # 쿼리문 실행
+    cursor.execute(sql, data)
+    conn.commit()
+
+    # 데이터베이스 접속종료
+    conn.close()

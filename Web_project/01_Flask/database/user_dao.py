@@ -26,6 +26,7 @@ def insertUserData(user_name, user_id, user_pw):
     # 데이터 베이스 접속을 끊어준다.
     conn.close()
 
+# -------------------------------------
 # 모든 회원 정보를 반환하는 함수 (Read)
 def selectUserDataAll():
     # 쿼리문
@@ -48,7 +49,7 @@ def selectUserDataAll():
 
     return result
 
-
+# -------------------------------------
 # 회원 한명의 데이터를 가져오는 함수
 def selectUserDataOne(user_idx):
     # 쿼리문 작성
@@ -73,6 +74,7 @@ def selectUserDataOne(user_idx):
 
     return result
 
+# -------------------------------------
 # 특정 회원의 데이터를 수정하는 함수
 def updataUserData(user_idx, user_pw):
     # 쿼리문 작성
@@ -96,7 +98,7 @@ def updataUserData(user_idx, user_pw):
     # 데이터베이스 접속종료
     conn.close()
 
-
+# -------------------------------------
 # 회원 정보 삭제 (Delete)
 def deleteUserData(user_idx):
     # 쿼리문 작성
@@ -118,3 +120,57 @@ def deleteUserData(user_idx):
 
     # 데이터베이스 접속 종료
     conn.close()
+
+# -------------------------------------
+# 아이디 중복 확인을위해 아이디를 확인하는 함수
+def checkInputUserId(new_id):
+    # 쿼리문 작성
+    sql = '''
+        select * from user_table
+        where user_id = %s
+    '''
+
+    # 데이터베이스 접속
+    conn = connector.get_connection()
+    cursor = conn.cursor()
+
+    # %s에 설정할 값
+    data = (new_id)
+
+    # 쿼리문 실행
+    cursor.execute(sql, data)
+    result = cursor.fetchone()
+
+    # 데이터베이스 접속해제
+    conn.close()
+
+    # 존재하지 않는 아이디면 result에는 None이 들어가 있다.
+    if result == None:
+        return True
+    else:
+        return False
+
+# ---------------------------------------------
+# 로그인 처리를 위해 회원 존재 여부를 확인한다.
+def check_login_user(user_id, user_pw):
+    # 쿼리문 작성
+    sql = '''
+        select * from user_table
+        where user_id = %s and user_pw = %s
+    '''
+
+    # 데이터베이스 접속
+    conn = connector.get_connection()
+    cursor = conn.cursor()
+
+    # %s 값 세팅
+    data = (user_id, user_pw)
+
+    # 쿼리문 실행
+    cursor.execute(sql, data)
+    result = cursor.fetchone()
+
+    # 데이터베이스 접속 종료
+    conn.close()
+
+    return result
